@@ -1,0 +1,69 @@
+apply plugin: "java"
+apply plugin: "maven-publish"
+apply plugin: "eclipse"
+
+sourceCompatibility = 1.6
+
+sourceSets.main.resources.srcDirs += [ "assets/" ]
+
+ext {
+    projectGroup = "tweener-samples"
+    gdxVersion = "1.9.5"
+    jUnitVersion = "4.12"
+    mockitoVersion = "1.10.19"
+}
+
+javadoc {
+    title = 'Tweener Tests'
+}
+
+eclipse.project {
+    name = projectGroup + "-samples"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+/** needed to disable Java 8 doclint which throws errors **/
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+dependencies {
+    compile project(":tweener")
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testCompile "junit:junit:$jUnitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId 'net.deltaplay.tweener'
+            artifactId 'tweener-samples'
+            version '0.0.2-SNAPSHOT'
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
