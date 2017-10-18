@@ -51,8 +51,11 @@ public class TweenTest extends ApplicationAdapter {
         texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
         sprite1 = new Sprite(texture);
+
         sprite2 = new Sprite(texture);
         sprite2.setSize(50, 50);
+        sprite2.setPosition( viewport.getWorldWidth() - sprite2.getWidth(), viewport.getWorldHeight() - sprite2.getHeight());
+
         sprite3 = new Sprite(texture);
         sprite3.setSize(50, 50);
 
@@ -93,7 +96,7 @@ public class TweenTest extends ApplicationAdapter {
                                 .to(COLOR1.r, COLOR1.g, COLOR1.b).duration(duration))
                 ).add(Tweener.parallel()
                         .add(Tweener.tween(sprite2, SpriteAccessor.POS)
-                                .to(0, 0).duration(duration))
+                                .to( viewport.getWorldWidth() - sprite2.getWidth(), viewport.getWorldHeight() - sprite2.getHeight()).duration(duration))
                         .add(Tweener.tween(sprite2, SpriteAccessor.ROTATION)
                                 .to(0).duration(duration))
                         .add(Tweener.tween(sprite2, SpriteAccessor.RGB)
