@@ -1,4 +1,5 @@
 apply plugin: "java"
+apply plugin: "application"
 apply plugin: "maven-publish"
 apply plugin: "eclipse"
 
@@ -8,7 +9,7 @@ sourceSets.main.resources.srcDirs += [ "assets/" ]
 
 ext {
     projectGroup = "tweener-samples"
-    gdxVersion = "1.9.5"
+    gdxVersion = "1.9.6"
     jUnitVersion = "4.12"
     mockitoVersion = "1.10.19"
 }
@@ -24,6 +25,7 @@ eclipse.project {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "https://jitpack.io"}
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
@@ -38,7 +40,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 dependencies {
-    compile project(":tweener")
+    compile "com.github.dcampos:tweener:master-SNAPSHOT"
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
@@ -66,4 +68,7 @@ publishing {
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
+
+mainClassName = "net.deltaplay.tweener.tests.TweenTest"
+
 

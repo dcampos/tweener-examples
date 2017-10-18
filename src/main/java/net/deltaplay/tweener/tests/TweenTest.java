@@ -34,7 +34,9 @@ public class TweenTest extends ApplicationAdapter {
     private TimeTween progressTween;
 
     public static void main(String[] args) {
-        new LwjglApplication(new TweenTest(), new LwjglApplicationConfiguration());
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.forceExit = false;
+        new LwjglApplication(new TweenTest(), config);
     }
 
     @Override
@@ -265,3 +267,4 @@ public class TweenTest extends ApplicationAdapter {
         }
     }
 }
+
