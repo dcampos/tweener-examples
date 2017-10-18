@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import net.deltaplay.tweener.TweenManager;
 import net.deltaplay.tweener.Tweener;
 import net.deltaplay.tweener.TimeTween;
 import net.deltaplay.tweener.Tweener.Tween;
@@ -30,6 +31,7 @@ public class TweenTest extends ApplicationAdapter {
     private ShapeRenderer renderer;
 
     private Sprite sprite1, sprite2, sprite3;
+    private TweenManager tweenManager;
     private Tween tween1, tween3, tween2;
     private TimeTween progressTween;
 
@@ -55,6 +57,8 @@ public class TweenTest extends ApplicationAdapter {
         sprite3.setSize(50, 50);
 
         float duration = 0.8f;
+
+        tweenManager = new TweenManager();
 
         progressTween = Tweener.delay(duration * 4 + 0.5f * 2);
 
@@ -117,6 +121,8 @@ public class TweenTest extends ApplicationAdapter {
                                 Tweener.delay(0.1f)
                         )));
 
+        tweenManager.add(tween1, tween2, tween3);
+
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keycode) {
@@ -141,9 +147,7 @@ public class TweenTest extends ApplicationAdapter {
         Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        tween1.update(Gdx.graphics.getDeltaTime());
-        tween2.update(Gdx.graphics.getDeltaTime());
-        tween3.update(Gdx.graphics.getDeltaTime());
+        tweenManager.update(Gdx.graphics.getDeltaTime());
 
         progressTween.update(Gdx.graphics.getDeltaTime());
 
@@ -165,7 +169,6 @@ public class TweenTest extends ApplicationAdapter {
         sprite2.draw(batch);
         sprite3.draw(batch);
         batch.end();
-
     }
 
     @Override
