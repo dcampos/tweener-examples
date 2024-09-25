@@ -1,25 +1,22 @@
 apply plugin: "java"
 apply plugin: "application"
-apply plugin: "maven-publish"
-apply plugin: "eclipse"
 
-sourceCompatibility = 1.6
+java {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
 
 sourceSets.main.resources.srcDirs += [ "assets/" ]
 
 ext {
     projectGroup = "tweener-samples"
-    gdxVersion = "1.9.6"
+    gdxVersion = "1.9.14"
     jUnitVersion = "4.12"
     mockitoVersion = "1.10.19"
 }
 
 javadoc {
-    title = 'Tweener Tests'
-}
-
-eclipse.project {
-    name = projectGroup + "-samples"
+    title = 'Tweener Examples'
 }
 
 repositories {
@@ -40,35 +37,18 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 dependencies {
-    compile "com.github.dcampos:tweener:master-SNAPSHOT"
-    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-    compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    testCompile "junit:junit:$jUnitVersion"
-    testCompile "org.mockito:mockito-core:$mockitoVersion"
-}
-
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            groupId 'net.deltaplay.tweener'
-            artifactId 'tweener-samples'
-            version '0.0.2-SNAPSHOT'
-
-            artifact sourceJar {
-                classifier "sources"
-            }
-        }
-    }
+    implementation "com.github.dcampos:tweener:master-SNAPSHOT"
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
 }
 
-mainClassName = "net.deltaplay.tweener.tests.TweenTest"
-
-
+application {
+    mainClass = "net.deltaplay.tweener.examples.Main"
+}

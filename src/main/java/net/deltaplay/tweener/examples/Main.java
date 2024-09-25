@@ -1,11 +1,11 @@
-package net.deltaplay.tweener.tests;
+package net.deltaplay.tweener.examples;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +22,7 @@ import net.deltaplay.tweener.TimeTween;
 import net.deltaplay.tweener.Tweener.Tween;
 import net.deltaplay.tweener.Tweener.TweenAccessor;
 
-public class TweenTest extends ApplicationAdapter {
+public class Main extends ApplicationAdapter {
     private static final Color COLOR1 = Color.valueOf("#6BB4D5");
     private static final Color COLOR2 = Color.valueOf("#F04A4A");
 
@@ -36,9 +36,11 @@ public class TweenTest extends ApplicationAdapter {
     private TimeTween progressTween;
 
     public static void main(String[] args) {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.forceExit = false;
-        new LwjglApplication(new TweenTest(), config);
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setForegroundFPS(60);
+        config.setWindowedMode(920, 600);
+        config.setTitle("Tweener Examples");
+        new Lwjgl3Application(new Main(), config);
     }
 
     @Override
@@ -146,7 +148,6 @@ public class TweenTest extends ApplicationAdapter {
     }
 
     private void render(Color color) {
-
         Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -273,4 +274,3 @@ public class TweenTest extends ApplicationAdapter {
         }
     }
 }
-
